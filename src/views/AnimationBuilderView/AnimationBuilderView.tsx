@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import FrameView from "./FrameView";
 import ColorPickerView from "./ColorPickerView";
-import {getDisplay} from '../../service/display-service';
+import {getDisplay, setDisplay} from '../../service/display-service';
 
 const FRAME_SIZE = 8; // put this somewhere clever
 
@@ -36,7 +36,7 @@ const AnimationBuilderView: FunctionComponent = () => {
                     setCurrentColor(colorString)
                 }
             />
-            <button>Save</button>
+            <button onClick={() => setDisplay(grid)}>Save to device</button>
         </div>
     );
 };

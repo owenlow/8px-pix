@@ -65,20 +65,29 @@ const DUMMY_DATA = [
     "#000000",
 ];
 
+const JSONBIN_KEY =
+    ":)";
+
+const JSONBIN_ENDPOINT = "https://api.jsonbin.io/b/5ff48bad14be54706019fe5a";
+
+const DEFAULT_HEADERS = new Headers({
+    "secret-key": JSONBIN_KEY,
+    "content-type": "application/json",
+});
+
 export async function getDisplay(): Promise<string[]> {
-    return new Promise(function (resolve, reject) {
-        setTimeout(() => {
-            console.log("got!");
-            resolve(DUMMY_DATA);
-        }, 1000);
+    const response = await fetch(`${JSONBIN_ENDPOINT}/latest`, {
+        headers: DEFAULT_HEADERS,
     });
+
+    return await response.json();
 }
 
 export async function setDisplay(data: string[]): Promise<void> {
-    return new Promise(function (resolve, reject) {
-        setTimeout(() => {
-            console.log("saved!");
-            resolve();
-        }, 500);
+    const response = await fetch(JSONBIN_ENDPOINT, {
+        method: "PUT",
+        headers: DEFAULT_HEADERS,
+        body: JSON.stringify(data),
     });
+    return await response.json();
 }
