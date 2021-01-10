@@ -8,16 +8,8 @@ interface Props {
     onCellClick: (cellIndex: number) => void;
 }
 
-function coordinatesToCellIndex(
-    x: number,
-    y: number,
-    frameSize: number
-): number {
-    return y * frameSize + x;
-}
-
 const CellButton = styled.button`
-    background: ${({color}) => color};
+    background: ${({ color }) => color};
     width: 2rem;
     height: 2rem;
 `;
@@ -31,7 +23,11 @@ const FrameView: FunctionComponent<Props> = ({
         {_.range(0, data.length).map((index) => {
             return (
                 <>
-                    <CellButton color={data[index]} onClick={() => onCellClick(index)} />
+                    <CellButton
+                        key={index}
+                        color={data[index]}
+                        onClick={() => onCellClick(index)}
+                    />
                     {(index + 1) % frameSize === 0 ? <br /> : null}
                 </>
             );
