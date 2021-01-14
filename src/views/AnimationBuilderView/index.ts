@@ -1,3 +1,1 @@
-import AnimationBuilderView from "./AnimationBuilderView";
-
-export default AnimationBuilderView;
+export { default } from "./AnimationBuilderView";

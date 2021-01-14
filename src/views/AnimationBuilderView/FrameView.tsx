@@ -2,11 +2,17 @@ import React, { FunctionComponent } from "react";
 import _ from "lodash";
 import styled from "styled-components";
 
+import Container from "../../components/Container";
+
 interface Props {
     frameSize: number;
     data: string[];
     onCellClick: (cellIndex: number) => void;
 }
+
+const CellRow = styled.div`
+    flex-direction: row;
+`;
 
 const CellButton = styled.button`
     background: ${({ color }) => color};
@@ -19,20 +25,19 @@ const FrameView: FunctionComponent<Props> = ({
     data,
     onCellClick,
 }) => (
-    <div>
-        {_.range(0, data.length).map((index) => {
-            return (
-                <>
+    <Container>
+        {_.range(0, data.length, frameSize).map((i) => (
+            <CellRow>
+                {_.range(i, i + frameSize).map((j) => (
                     <CellButton
-                        key={index}
-                        color={data[index]}
-                        onClick={() => onCellClick(index)}
+                        key={j}
+                        color={data[j]}
+                        onClick={() => onCellClick(j)}
                     />
-                    {(index + 1) % frameSize === 0 ? <br /> : null}
-                </>
-            );
-        })}
-    </div>
+                ))}
+            </CellRow>
+        ))}
+    </Container>
 );
 
 export default FrameView;

@@ -2,15 +2,17 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import FrameView from "./FrameView";
 import ColorPicker from "./ColorPicker";
 import { getDisplay, setDisplay } from "../../service/display-service";
-
-const FRAME_SIZE = 8; // put this somewhere clever
+import Button from "../../components/Button";
+import FramePicker from "./FramePicker";
+import { FrameData } from "../../types";
+import { DISPLAY_SIZE, FRAME_DATA_LENGTH } from "../../constants/display";
 
 const AnimationBuilderView: FunctionComponent = () => {
     const [pendingData, setPendingData] = useState<boolean>(true);
-    const [grid, setGrid] = useState<string[]>([]);
+    const [grid, setGrid] = useState<FrameData>([]);
 
-    useEffect(function () {
-        (async function () {
+    useEffect(() => {
+        (async () => {
             const displayData = await getDisplay();
             setGrid(displayData);
             setPendingData(false);
@@ -29,14 +31,15 @@ const AnimationBuilderView: FunctionComponent = () => {
         return <div>Loading...</div>;
     }
 
-    if (grid.length !== Math.pow(FRAME_SIZE, 2)) {
+    if (grid.length !== FRAME_DATA_LENGTH) {
         return <div>Invalid grid configuration</div>;
     }
 
     return (
         <div>
+            <FramePicker />
             <FrameView
-                frameSize={FRAME_SIZE}
+                frameSize={DISPLAY_SIZE}
                 data={grid}
                 onCellClick={handleCellClick}
             />
@@ -46,7 +49,7 @@ const AnimationBuilderView: FunctionComponent = () => {
                     setCurrentColor(colorString)
                 }
             />
-            <button onClick={() => setDisplay(grid)}>Save to device</button>
+            <Button onClick={() => setDisplay(grid)}>Save to device</Button>
         </div>
     );
 };

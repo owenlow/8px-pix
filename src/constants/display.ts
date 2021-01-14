@@ -1,0 +1,3 @@
+export const DISPLAY_SIZE = 8;
+
+export const FRAME_DATA_LENGTH = DISPLAY_SIZE * DISPLAY_SIZE;
