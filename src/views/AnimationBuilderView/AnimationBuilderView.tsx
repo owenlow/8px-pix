@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import FrameView from "./FrameView";
 import ColorPicker from "./ColorPicker";
 import { getDisplay, setDisplay } from "../../service/display-service";
@@ -7,7 +8,13 @@ import FramePicker from "./FramePicker";
 import { FrameData } from "../../types";
 import { DISPLAY_SIZE, FRAME_DATA_LENGTH } from "../../constants/display";
 
-const AnimationBuilderView: FunctionComponent = () => {
+interface Props {
+    id: string;
+}
+
+const AnimationBuilderView: FunctionComponent<RouteComponentProps<
+    Props
+>> = () => {
     const [pendingData, setPendingData] = useState<boolean>(true);
     const [grid, setGrid] = useState<FrameData>([]);
 

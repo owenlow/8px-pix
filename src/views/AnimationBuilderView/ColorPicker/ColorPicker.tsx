@@ -8,7 +8,7 @@ interface Props {
 
 const ColorPicker: FunctionComponent<Props> = ({
     currentColor,
-    selectColor,
+    selectColor
 }) => {
     function onColorInputChange(event: ChangeEvent<HTMLInputElement>) {
         event.preventDefault();
@@ -23,9 +23,9 @@ const ColorPicker: FunctionComponent<Props> = ({
                 style={{
                     width: "2rem",
                     height: "2rem",
-                    backgroundColor: currentColor,
+                    backgroundColor: currentColor
                 }}
-            ></div>
+            />
         </div>
     );
 };
