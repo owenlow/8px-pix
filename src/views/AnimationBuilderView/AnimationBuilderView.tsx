@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import FrameView from "./FrameView";
-import ColorPicker from "./ColorPicker";
-import { getDisplay, setDisplay } from "../../service/display-service";
 import Button from "../../components/Button";
-import FramePicker from "./FramePicker";
-import { FrameData } from "../../types";
 import { DISPLAY_SIZE, FRAME_DATA_LENGTH } from "../../constants/display";
+import { getDisplay, setDisplay } from "../../service/display-service";
+import { FrameData } from "../../types";
+import ColorPicker from "./ColorPicker";
+import FramePicker from "./FramePicker";
+import FrameView from "./FrameView";
 
 interface Props {
     id: string;
