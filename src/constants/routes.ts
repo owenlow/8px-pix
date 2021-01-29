@@ -1,2 +1,2 @@
 export const LANDING = "/";
-export const ANIMATION_EDITOR = "/animations/:id/edit";
+export const PROJECT_EDITOR = "/projects/:id/edit";

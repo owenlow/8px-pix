@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import Button from "../../components/Button";
 import { DISPLAY_SIZE, FRAME_DATA_LENGTH } from "../../constants/display";
-import { getDisplay, setDisplay } from "../../service/display-service";
+import { getDisplay, setProjectData } from "../../service/display-service";
 import { FrameData } from "../../types";
 import ColorPicker from "./ColorPicker";
 import FramePicker from "./FramePicker";
@@ -56,7 +56,7 @@ const AnimationBuilderView: FunctionComponent<RouteComponentProps<
                     setCurrentColor(colorString)
                 }
             />
-            <Button onClick={() => setDisplay(grid)}>Save to device</Button>
+            <Button onClick={() => setProjectData(grid)}>Save to device</Button>
         </div>
     );
 };

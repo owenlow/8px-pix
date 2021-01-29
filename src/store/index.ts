@@ -1,8 +1,9 @@
-import { combineReducers, createStore } from "redux";
-import { reducer as animationsReducer } from "./animations/reducers";
+import { Action, combineReducers, createStore } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { reducer as projectsReducer } from "./projects/reducers";
 
 const rootReducer = combineReducers({
-    animations: animationsReducer
+    projects: projectsReducer
 });
 
 const store = createStore(rootReducer);

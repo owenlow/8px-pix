@@ -1,16 +1,15 @@
 import { Reducer } from "redux";
 import { v4 as uuidv4 } from "uuid";
-
-import {
-    AnimationStoreActionTypes,
-    AnimationStoreState,
-    CreateAnimationAction,
-    DeleteAnimationAction,
-    UpdateAnimationAction
-} from "./types";
 import { FRAME_DATA_LENGTH } from "../../constants/display";
+import {
+    CreateProjectAction,
+    DeleteProjectAction,
+    ProjectStoreActionTypes,
+    ProjectStoreState,
+    UpdateProjectAction
+} from "./types";
 
-const initialState: AnimationStoreState = {
+const initialState: ProjectStoreState = {
     foo123: {
         id: "foo123",
         name: "Dummy animation",
@@ -19,9 +18,9 @@ const initialState: AnimationStoreState = {
 };
 
 function createAnimation(
-    state: AnimationStoreState,
-    action: CreateAnimationAction
-): AnimationStoreState {
+    state: ProjectStoreState,
+    action: CreateProjectAction
+): ProjectStoreState {
     const name = action.payload;
     const id = uuidv4();
     return {
@@ -35,9 +34,9 @@ function createAnimation(
 }
 
 function updateAnimation(
-    state: AnimationStoreState,
-    action: UpdateAnimationAction
-): AnimationStoreState {
+    state: ProjectStoreState,
+    action: UpdateProjectAction
+): ProjectStoreState {
     return {
         ...state,
         [action.payload.id]: action.payload
@@ -45,17 +44,17 @@ function updateAnimation(
 }
 
 function deleteAnimation(
-    state: AnimationStoreState,
-    action: DeleteAnimationAction
-): AnimationStoreState {
+    state: ProjectStoreState,
+    action: DeleteProjectAction
+): ProjectStoreState {
     const { [action.payload]: omitted, ...rest } = state;
     return rest;
 }
 
-export const reducer: Reducer<
-    AnimationStoreState,
-    AnimationStoreActionTypes
-> = (state = initialState, action) => {
+export const reducer: Reducer<ProjectStoreState, ProjectStoreActionTypes> = (
+    state = initialState,
+    action
+) => {
     switch (action.type) {
         case "CREATE_ANIMATION":
             return createAnimation(state, action);

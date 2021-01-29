@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
-import { ANIMATION_EDITOR, LANDING } from "./constants/routes";
+import { LANDING, PROJECT_EDITOR } from "./constants/routes";
 import AnimationBuilderView from "./views/AnimationBuilderView";
 import AnimationsListView from "./views/AnimationsListView";
 
@@ -17,7 +17,7 @@ function App() {
                     />
                     <Route
                         exact={true}
-                        path={ANIMATION_EDITOR}
+                        path={PROJECT_EDITOR}
                         component={AnimationBuilderView}
                     />
                 </Switch>

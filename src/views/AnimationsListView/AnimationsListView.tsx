@@ -2,46 +2,46 @@ import React, { FunctionComponent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { generatePath } from "react-router-dom";
 import Button from "../../components/Button";
-import { ANIMATION_EDITOR } from "../../constants/routes";
+import { PROJECT_EDITOR } from "../../constants/routes";
 import { RootState } from "../../store";
-import { createAnimation } from "../../store/animations/actions";
-import { AnimationStoreState } from "../../store/animations/types";
+import { createProject } from "../../store/projects/actions";
+import { ProjectStoreState } from "../../store/projects/types";
 import CreateNewItemModal from "./CreateNewItemModal";
 
 const AnimationsListView: FunctionComponent = () => {
-    const [createNewModalOpen, setCreateNewModalOpen] = useState<boolean>(
-        false
-    );
+    const [createProjectModalOpen, setCreateProjectModalOpen] = useState<
+        boolean
+    >(false);
 
-    const allAnimations = useSelector<RootState, AnimationStoreState>(
-        (state) => state.animations
+    const allProjects = useSelector<RootState, ProjectStoreState>(
+        (state) => state.projects
     );
     const dispatch = useDispatch();
 
     function handleCreateNewClick() {
-        setCreateNewModalOpen(true);
+        setCreateProjectModalOpen(true);
     }
 
     function closeModal() {
-        setCreateNewModalOpen(false);
+        setCreateProjectModalOpen(false);
     }
 
     function handleModalCreate(name: string) {
-        dispatch(createAnimation(name));
-        setCreateNewModalOpen(false);
+        dispatch(createProject(name));
+        setCreateProjectModalOpen(false);
     }
 
     return (
         <div>
             <CreateNewItemModal
-                isOpen={createNewModalOpen}
+                isOpen={createProjectModalOpen}
                 closeModal={closeModal}
                 createItem={handleModalCreate}
             />
-            <h1>Select an animation to edit</h1>
-            {Object.values(allAnimations).map(({ id, name }) => (
+            <h1>Select a project to edit</h1>
+            {Object.values(allProjects).map(({ id, name }) => (
                 <div>
-                    <a href={generatePath(ANIMATION_EDITOR, { id })}>{name}</a>
+                    <a href={generatePath(PROJECT_EDITOR, { id })}>{name}</a>
                 </div>
             ))}
             <Button onClick={handleCreateNewClick}>Create new animation</Button>
