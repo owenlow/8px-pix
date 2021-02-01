@@ -1,7 +1,10 @@
 import {
     CreateProjectAction,
     CREATE_PROJECT,
+    LoadProjectsAction,
+    LOAD_PROJECTS,
     ProjectData,
+    ProjectStoreState,
     UpdateProjectAction,
     UPDATE_PROJECT
 } from "./types";
@@ -11,7 +14,7 @@ export const createProject = (projectName: string): CreateProjectAction => ({
     payload: projectName
 });
 
-export const updateAnimation = ({
+export const updateProject = ({
     id,
     frames,
     name
@@ -22,4 +25,11 @@ export const updateAnimation = ({
         name,
         frames
     }
+});
+
+export const loadProjects = (
+    storeState: ProjectStoreState
+): LoadProjectsAction => ({
+    type: LOAD_PROJECTS,
+    payload: storeState
 });

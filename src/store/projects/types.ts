@@ -4,7 +4,7 @@ import { FrameData } from "../../types";
 export interface ProjectData {
     id: string;
     name: string;
-    frames: FrameData;
+    frames: FrameData[];
 }
 
 export interface ProjectStoreState {
@@ -14,6 +14,7 @@ export interface ProjectStoreState {
 export const CREATE_PROJECT = "CREATE_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const DELETE_PROJECT = "DELETE_PROJECT";
+export const LOAD_PROJECTS = "LOAD_PROJECTS";
 
 export interface CreateProjectAction extends Action {
     type: typeof CREATE_PROJECT;
@@ -30,7 +31,13 @@ export interface DeleteProjectAction extends Action {
     payload: string;
 }
 
+export interface LoadProjectsAction extends Action {
+    type: typeof LOAD_PROJECTS;
+    payload: ProjectStoreState;
+}
+
 export type ProjectStoreActionTypes =
     | CreateProjectAction
     | UpdateProjectAction
-    | DeleteProjectAction;
+    | DeleteProjectAction
+    | LoadProjectsAction;

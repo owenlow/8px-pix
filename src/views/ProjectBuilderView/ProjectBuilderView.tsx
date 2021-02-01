@@ -1,44 +1,67 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RouteComponentProps, useParams } from "react-router-dom";
 import Button from "../../components/Button";
 import { DISPLAY_SIZE, FRAME_DATA_LENGTH } from "../../constants/display";
-import { getDisplay, setProjectData } from "../../service/display-service";
+import { RootState } from "../../store";
+import {
+    thunkGetRemoteProjects,
+    thunkUpdateProject
+} from "../../store/projects/thunks";
+import { ProjectData } from "../../store/projects/types";
 import { FrameData } from "../../types";
 import ColorPicker from "./ColorPicker";
 import FramePicker from "./FramePicker";
 import FrameView from "./FrameView";
 
-interface Props {
-    id: string;
+interface PathVariables {
+    projectId: string; // Expected to be a number but `useParams` only allows strings
+}
+
+interface QueryParams {
+    frameIndexParam?: string;
 }
 
 const ProjectBuilderView: FunctionComponent<RouteComponentProps<
-    Props
->> = () => {
-    const [pendingData, setPendingData] = useState<boolean>(true);
-    const [grid, setGrid] = useState<FrameData>([]);
+    PathVariables
+>> = ({
+    match: {
+        params: { projectId }
+    }
+}) => {
+    const dispatch = useDispatch();
+
+    const { frameIndexParam = "0" } = useParams<QueryParams>();
+    const currentProject = useSelector<RootState, ProjectData>(
+        (state) => state.projects[projectId]
+    );
+
+    const frameIndex = parseInt(frameIndexParam);
+    const [currentFrame, setCurrentFrame] = useState<FrameData>([]);
 
     useEffect(() => {
-        (async () => {
-            const displayData = await getDisplay();
-            setGrid(displayData);
-            setPendingData(false);
-        })();
-    }, []);
+        if (currentProject) {
+            setCurrentFrame(currentProject.frames[frameIndex]);
+        }
+    }, [currentProject, frameIndex]);
+
+    useEffect(() => {
+        dispatch(thunkGetRemoteProjects());
+    }, [dispatch]);
 
     function handleCellClick(index: number) {
-        const newGrid = [...grid];
-        newGrid[index] = currentColor;
-        setGrid(newGrid);
+        const updatedFrame = [...currentFrame];
+        updatedFrame[index] = currentColor;
+        setCurrentFrame(updatedFrame);
+        currentProject.frames[frameIndex] = updatedFrame;
     }
 
     const [currentColor, setCurrentColor] = useState<string>("#fff");
-
-    if (pendingData) {
+    if (!currentProject) {
         return <div>Loading...</div>;
     }
 
-    if (grid.length !== FRAME_DATA_LENGTH) {
+    if (currentFrame && currentFrame.length !== FRAME_DATA_LENGTH) {
         return <div>Invalid grid configuration</div>;
     }
 
@@ -47,7 +70,7 @@ const ProjectBuilderView: FunctionComponent<RouteComponentProps<
             <FramePicker />
             <FrameView
                 frameSize={DISPLAY_SIZE}
-                data={grid}
+                data={currentFrame}
                 onCellClick={handleCellClick}
             />
             <ColorPicker
@@ -56,7 +79,11 @@ const ProjectBuilderView: FunctionComponent<RouteComponentProps<
                     setCurrentColor(colorString)
                 }
             />
-            <Button onClick={() => setProjectData(grid)}>Save to device</Button>
+            <Button
+                onClick={() => dispatch(thunkUpdateProject(currentProject))}
+            >
+                Save to device
+            </Button>
         </div>
     );
 };

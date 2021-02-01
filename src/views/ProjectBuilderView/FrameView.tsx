@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from "react";
 import _ from "lodash";
+import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-
 import Container from "../../components/Container";
 
 interface Props {
@@ -23,11 +22,11 @@ const CellButton = styled.button`
 const FrameView: FunctionComponent<Props> = ({
     frameSize,
     data,
-    onCellClick,
+    onCellClick
 }) => (
     <Container>
         {_.range(0, data.length, frameSize).map((i) => (
-            <CellRow>
+            <CellRow key={i}>
                 {_.range(i, i + frameSize).map((j) => (
                     <CellButton
                         key={j}

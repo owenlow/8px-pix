@@ -3,21 +3,19 @@ import { v4 as uuidv4 } from "uuid";
 import { FRAME_DATA_LENGTH } from "../../constants/display";
 import {
     CreateProjectAction,
+    CREATE_PROJECT,
     DeleteProjectAction,
+    DELETE_PROJECT,
+    LOAD_PROJECTS,
     ProjectStoreActionTypes,
     ProjectStoreState,
-    UpdateProjectAction
+    UpdateProjectAction,
+    UPDATE_PROJECT
 } from "./types";
 
-const initialState: ProjectStoreState = {
-    foo123: {
-        id: "foo123",
-        name: "Dummy animation",
-        frames: Array(64).fill("#fff")
-    }
-};
+const initialState: ProjectStoreState = {};
 
-function createAnimation(
+function createProject(
     state: ProjectStoreState,
     action: CreateProjectAction
 ): ProjectStoreState {
@@ -28,12 +26,12 @@ function createAnimation(
         [id]: {
             id,
             name,
-            frames: Array(FRAME_DATA_LENGTH).fill("#000")
+            frames: [Array(FRAME_DATA_LENGTH).fill("#000")]
         }
     };
 }
 
-function updateAnimation(
+function updateProject(
     state: ProjectStoreState,
     action: UpdateProjectAction
 ): ProjectStoreState {
@@ -43,7 +41,7 @@ function updateAnimation(
     };
 }
 
-function deleteAnimation(
+function deleteProject(
     state: ProjectStoreState,
     action: DeleteProjectAction
 ): ProjectStoreState {
@@ -56,12 +54,14 @@ export const reducer: Reducer<ProjectStoreState, ProjectStoreActionTypes> = (
     action
 ) => {
     switch (action.type) {
-        case "CREATE_ANIMATION":
-            return createAnimation(state, action);
-        case "UPDATE_ANIMATION":
-            return updateAnimation(state, action);
-        case "DELETE_ANIMATION":
-            return deleteAnimation(state, action);
+        case CREATE_PROJECT:
+            return createProject(state, action);
+        case UPDATE_PROJECT:
+            return updateProject(state, action);
+        case DELETE_PROJECT:
+            return deleteProject(state, action);
+        case LOAD_PROJECTS:
+            return action.payload;
     }
     return state;
 };
