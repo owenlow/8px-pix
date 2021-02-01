@@ -8,7 +8,7 @@ import { createProject } from "../../store/projects/actions";
 import { ProjectStoreState } from "../../store/projects/types";
 import CreateNewItemModal from "./CreateNewItemModal";
 
-const AnimationsListView: FunctionComponent = () => {
+const ProjectListView: FunctionComponent = () => {
     const [createProjectModalOpen, setCreateProjectModalOpen] = useState<
         boolean
     >(false);
@@ -49,4 +49,4 @@ const AnimationsListView: FunctionComponent = () => {
     );
 };
 
-export default AnimationsListView;
+export default ProjectListView;

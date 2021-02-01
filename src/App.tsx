@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
 import { LANDING, PROJECT_EDITOR } from "./constants/routes";
-import AnimationBuilderView from "./views/AnimationBuilderView";
-import AnimationsListView from "./views/AnimationsListView";
+import ProjectBuilderView from "./views/ProjectBuilderView";
+import ProjectListView from "./views/ProjectListView";
 
 function App() {
     return (
@@ -13,12 +13,12 @@ function App() {
                     <Route
                         exact={true}
                         path={LANDING}
-                        component={AnimationsListView}
+                        component={ProjectListView}
                     />
                     <Route
                         exact={true}
                         path={PROJECT_EDITOR}
-                        component={AnimationBuilderView}
+                        component={ProjectBuilderView}
                     />
                 </Switch>
             </BrowserRouter>

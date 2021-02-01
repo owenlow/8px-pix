@@ -12,7 +12,7 @@ interface Props {
     id: string;
 }
 
-const AnimationBuilderView: FunctionComponent<RouteComponentProps<
+const ProjectBuilderView: FunctionComponent<RouteComponentProps<
     Props
 >> = () => {
     const [pendingData, setPendingData] = useState<boolean>(true);
@@ -61,4 +61,4 @@ const AnimationBuilderView: FunctionComponent<RouteComponentProps<
     );
 };
 
-export default AnimationBuilderView;
+export default ProjectBuilderView;
