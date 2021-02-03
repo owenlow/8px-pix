@@ -1,6 +1,8 @@
 import {
     CreateProjectAction,
     CREATE_PROJECT,
+    DeleteProjectAction,
+    DELETE_PROJECT,
     LoadProjectsAction,
     LOAD_PROJECTS,
     ProjectData,
@@ -25,6 +27,11 @@ export const updateProject = ({
         name,
         frames
     }
+});
+
+export const deleteProject = (projectId: string): DeleteProjectAction => ({
+    type: DELETE_PROJECT,
+    payload: projectId
 });
 
 export const loadProjects = (

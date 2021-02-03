@@ -1,8 +1,18 @@
 import { ThunkDispatch } from "redux-thunk";
 import { getProjectData, setProjectData } from "../../service/display-service";
 import { AppThunk, RootState } from "../index";
-import { createProject, loadProjects, updateProject } from "./actions";
-import { CreateProjectAction, ProjectData, UpdateProjectAction } from "./types";
+import {
+    createProject,
+    deleteProject,
+    loadProjects,
+    updateProject
+} from "./actions";
+import {
+    CreateProjectAction,
+    DeleteProjectAction,
+    ProjectData,
+    UpdateProjectAction
+} from "./types";
 
 export const thunkCreateProject = (projectName: string): AppThunk => (
     dispatch: ThunkDispatch<RootState, any, CreateProjectAction>
@@ -15,6 +25,13 @@ export const thunkUpdateProject = (project: ProjectData): AppThunk => (
     dispatch: ThunkDispatch<RootState, any, UpdateProjectAction>
 ): void => {
     dispatch(updateProject(project));
+    dispatch(thunkUpdateRemoteProjects());
+};
+
+export const thunkDeleteProject = (projectId: string): AppThunk => (
+    dispatch: ThunkDispatch<RootState, any, DeleteProjectAction>
+): void => {
+    dispatch(deleteProject(projectId));
     dispatch(thunkUpdateRemoteProjects());
 };
 
