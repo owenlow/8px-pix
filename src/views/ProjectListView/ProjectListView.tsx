@@ -1,9 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { generatePath } from "react-router-dom";
+import Anchor from "../../components/Anchor";
 import Button from "../../components/Button";
-import Container from "../../components/Container";
 import IconButton from "../../components/IconButton";
+import ListContainer from "../../components/ListContainer";
+import ListItem from "../../components/ListItem";
+import Text from "../../components/Text";
 import { PROJECT_EDITOR } from "../../constants/routes";
 import { RootState } from "../../store";
 import {
@@ -72,22 +75,28 @@ const ProjectListView: FunctionComponent = () => {
                 createItem={handleModalCreate}
             />
             <h1>All Projects</h1>
-            <Container>
+            <ListContainer width={"20rem"}>
                 {Object.values(allProjects).map((project) => (
-                    <div>
-                        <a
-                            href={generatePath(PROJECT_EDITOR, {
-                                projectId: project.id
-                            })}
-                        >
-                            {project.name}
-                        </a>
-                        <IconButton onClick={() => handleDeleteClick(project)}>
-                            🗑
-                        </IconButton>
-                    </div>
+                    <Anchor
+                        href={generatePath(PROJECT_EDITOR, {
+                            projectId: project.id
+                        })}
+                    >
+                        <ListItem>
+                            <Text>{project.name}</Text>
+                            <IconButton
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    handleDeleteClick(project);
+                                }}
+                            >
+                                🗑
+                            </IconButton>
+                        </ListItem>
+                    </Anchor>
                 ))}
-            </Container>
+            </ListContainer>
             <Button onClick={handleCreateNewClick}>Create new animation</Button>
         </div>
     );
