@@ -53,7 +53,7 @@ const ProjectBuilderView: FunctionComponent<RouteComponentProps<
 
     useEffect(() => {
         if (currentProject) {
-            setCurrentFrame(currentProject.frames[frameIndex]);
+            setCurrentFrame(currentProject!.frames[frameIndex]);
         }
     }, [currentProject, frameIndex]);
 
@@ -86,7 +86,10 @@ const ProjectBuilderView: FunctionComponent<RouteComponentProps<
         });
     }
     function handleDeleteFrame() {
-        currentProject!.frames.splice(frameIndex, 1);
+        const newFrames: FrameData[] = [
+            ...currentProject!.frames.slice(0, frameIndex),
+            ...currentProject!.frames.slice(frameIndex + 1)
+        ];
         if (frameIndex >= currentProject!.frames.length) {
             history.push({
                 search:
@@ -96,7 +99,10 @@ const ProjectBuilderView: FunctionComponent<RouteComponentProps<
                     }).toString()
             });
         }
-        setCurrentProject(currentProject);
+        setCurrentProject({
+            ...currentProject,
+            frames: newFrames
+        } as ProjectData);
     }
 
     const [currentColor, setCurrentColor] = useState<string>("#fff");
